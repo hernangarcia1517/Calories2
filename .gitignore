@@ -1,0 +1,86 @@
+package p2;
+import java.io.IOException;
+import java.util.Scanner;
+import java.io.File;
+
+public class Calories2 {
+
+	public static void main(String[] args) throws IOException
+	{
+		
+		
+		int[][] Array = ReadFile();
+		AverageCaloriesPerDay(Array);
+		
+	}
+	
+	public static int[][] ReadFile() throws IOException
+	{
+		try
+		{
+			File otherFile = new File("C:/Users/Luis Alonso Baylón/workspaceFile/Lab2Assign2.txt");
+		
+			Scanner fileRead = new Scanner(otherFile);
+		
+			String readStr;
+			int daysOfWeek = 7;
+			//The number of meals will vary on this program.
+			int mealsPerWeek; //So we will not put mealsPerWeek equals to anything until later.
+			
+			int[][] array = new int[7][]; //We don't know the number of columns yet
+										  //We will leave this blank for now
+		
+			for(int i = 0; i < daysOfWeek; i++) //We know the number of weeks
+			{
+				
+				readStr = fileRead.nextLine(); //Saving the file as a string.
+				String [] token = readStr.split(" "); //Splitting the string into an array.
+				mealsPerWeek = token.length;  //Setting the number of meals as the length of an array
+				/*This will change as the length of the String array changes*/
+				array = new int[7][token.length];
+				/*Same here, now we know the size of our array so we will set it equal to
+				 * the length of our String array, once again this will change as the
+				 * size of String array changes. (Kind of like an update)
+				 */
+				
+				for(int j = 0; j < mealsPerWeek; j++)
+				{
+					array[i][j] = Integer.parseInt(token[j]); //Parsing token to populate array.
+				//	System.out.print(array[i][j]); //Once again this was just to check
+				}
+			//	System.out.println();
+			}
+			fileRead.close();
+			return array;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+		
+		
+	}
+	
+	public static void AverageCaloriesPerDay(int[][] copyOfMain)
+	{
+		int[] ragDSum = new int[7];
+		for(int i = 0; i < copyOfMain.length; i++)
+		{
+			ragDSum[i] = 0;
+			for(int j = 0; j < copyOfMain[i].length; j++)
+			{
+				ragDSum[i] += copyOfMain[i][j];
+			}
+		}
+		System.out.println("Average calories for Monday: " + ragDSum[0]);
+		System.out.println("Average calories for Tuesday: " + ragDSum[1]);
+		System.out.println("Average calories for Wednesday: " + ragDSum[2]);
+		System.out.println("Average calories for Thursday: " + ragDSum[3]);
+		System.out.println("Average calories for Friday: " + ragDSum[4]);
+		System.out.println("Average calories for Saturday: " + ragDSum[5]);
+		System.out.println("Average calories for Sunday: " + ragDSum[6]);
+		
+	}
+
+}
